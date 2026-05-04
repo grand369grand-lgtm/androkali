@@ -178,6 +178,18 @@ def downloadBootstrap(String arch, String expectedChecksum, String version) {
     def localUrl = "src/main/cpp/bootstrap-" + arch + ".zip"
     def file = new File(projectDir, localUrl)
     if (file.exists()) {
+        // Check if the file has already been patched (contains com.kali instead of com.termux)
+        // If so, skip download and checksum verification
+        def randomAccessFile = new RandomAccessFile(file, "r")
+        def sampleSize = Math.min(file.length(), 65536).intValue()
+        def sampleBytes = new byte[sampleSize]
+        randomAccessFile.readFully(sampleBytes)
+        randomAccessFile.close()
+        if (new String(sampleBytes, "UTF-8").contains("com.kali")) {
+            logger.quiet("Bootstrap " + arch + " already patched, skipping download")
+            return
+        }
+
         def buffer = new byte[8192]
         def input = new FileInputStream(file)
         while (true) {
@@ -185,6 +197,7 @@ def downloadBootstrap(String arch, String expectedChecksum, String version) {
             if (readBytes < 0) break
             digest.update(buffer, 0, readBytes)
         }
+        input.close()
         def checksum = new BigInteger(1, digest.digest()).toString(16)
         while (checksum.length() < 64) { checksum = "0" + checksum }
         if (checksum == expectedChecksum) {
@@ -244,8 +257,38 @@ task downloadBootstraps() {
     }
 }
 
+task patchBootstraps() {
+    dependsOn downloadBootstraps
+    doLast {
+        // Patch bootstrap zips to replace com.termux with com.kali in all files.
+        // This is needed because the bootstrap binaries have /data/data/com.termux hardcoded paths,
+        // but our app uses applicationId "com.kali" so the data directory is /data/data/com.kali/.
+        def patchScript = new File(project.rootDir, "patch-bootstrap.py")
+        if (!patchScript.exists()) {
+            logger.quiet("Patch script not found, skipping bootstrap patching")
+            return
+        }
+        def bootstrapDir = new File(projectDir, "src/main/cpp")
+        def zips = bootstrapDir.listFiles({ dir, name -> name.startsWith("bootstrap-") && name.endsWith(".zip") } as FilenameFilter)
+        if (zips != null) {
+            for (zipFile in zips) {
+                logger.quiet("Patching bootstrap: " + zipFile.name)
+                def process = new ProcessBuilder("python3", patchScript.absolutePath, zipFile.absolutePath)
+                    .redirectErrorStream(true)
+                    .start()
+                def output = process.text
+                if (output) logger.quiet(output)
+                process.waitFor()
+                if (process.exitValue() != 0) {
+                    throw new GradleException("Failed to patch bootstrap: " + zipFile.name)
+                }
+            }
+        }
+    }
+}
+
 afterEvaluate {
     android.applicationVariants.all { variant ->
-        variant.javaCompileProvider.get().dependsOn(downloadBootstraps)
+        variant.javaCompileProvider.get().dependsOn(patchBootstraps)
     }
 }
