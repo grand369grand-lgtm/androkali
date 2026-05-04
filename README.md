@@ -1,10 +1,10 @@
-AndroKali - Android Terminal App Documentation
+Anroot - Android Terminal App Documentation
 
 <div align="center">
 
 https://crossberry.vercel.app/logo.png
 
-Run Kali Linux on Your Android Device Without Root Access
+Run Anroot Linux on Your Android Device Without Root Access
 
 https://img.shields.io/badge/Termux-0.118.2-blue.svg
 https://img.shields.io/badge/License-MIT-green.svg
@@ -34,15 +34,15 @@ Developed by Crossberry
 
 🎯 Overview
 
-AndroKali is a powerful Android application that allows you to run Kali Linux on your Android device using Termux as the base terminal emulator. The app combines the flexibility of Termux with the penetration testing capabilities of Kali Linux, all without requiring root access on your device .
+Anroot is a powerful Android application that allows you to run Anroot Linux on your Android device using Termux as the base terminal emulator. The app combines the flexibility of Termux with the penetration testing capabilities of Anroot Linux, all without requiring root access on your device .
 
-What is AndroKali?
+What is Anroot?
 
-AndroKali is a customized Termux-based solution with:
+Anroot is a customized Termux-based solution with:
 
-· Package Name: com.kali
+· Package Name: com.anroot
 · Base Technology: Termux + PRoot isolation
-· Target OS: Kali Linux (command-line interface)
+· Target OS: Anroot Linux (command-line interface)
 
 ---
 
@@ -50,8 +50,8 @@ AndroKali is a customized Termux-based solution with:
 
 Feature Description
 No Root Required Runs entirely in userspace using PRoot technology
-Full Kali Tools Access to Kali Linux's extensive penetration testing toolkit
-Custom Package Name Uses com.kali instead of standard com.termux
+Full Anroot Tools Access to Anroot Linux's extensive penetration testing toolkit
+Custom Package Name Uses com.anroot instead of standard com.termux
 Isolated Environment Complete separation from host Android system
 Lightweight Minimal resource overhead compared to VM solutions
 Persistent Storage Your tools and data persist across sessions 
@@ -69,8 +69,8 @@ Hardware Requirements
 
 Software Requirements
 
-· Termux (custom build with com.kali package)
-· AndroKali APK (custom build)
+· Termux (custom build with com.anroot package)
+· Anroot APK (custom build)
 · VNC Viewer (optional, for GUI)
 
 ---
@@ -79,7 +79,7 @@ Software Requirements
 
 Step 1: Install Custom Termux
 
-Download and install the custom Termux build with package name com.kali:
+Download and install the custom Termux build with package name com.anroot:
 
 ```bash
 # Download custom Termux build
@@ -89,11 +89,11 @@ wget https://github.com/termux/termux-app/releases/download/v0.118.2/termux-app_
 adb install termux-app_v0.118.2+github-debug_arm64-v8a.apk
 ```
 
-Note: You need a Termux build modified with package name com.kali. Use termux-generator to create your own custom build .
+Note: You need a Termux build modified with package name com.anroot. Use termux-generator to create your own custom build .
 
-Step 2: Install AndroKali App
+Step 2: Install Anroot App
 
-Download and install the AndroKali APK from Crossberry.
+Download and install the Anroot APK from Crossberry.
 
 Step 3: Initial Termux Setup
 
@@ -110,29 +110,29 @@ pkg install -y wget curl proot tar openssl-tool
 termux-setup-storage
 ```
 
-Step 4: Install Kali Linux
+Step 4: Install Anroot Linux
 
 Run the automated installation script:
 
 ```bash
-# Download and execute Kali installer
-wget https://raw.githubusercontent.com/AndronixApp/AndronixOrigin/master/Installer/Kali/kali.sh -O kali.sh
+# Download and execute Anroot installer
+wget https://raw.githubusercontent.com/AndronixApp/AndronixOrigin/master/Installer/Anroot/kali.sh -O kali.sh
 chmod +x kali.sh
 bash kali.sh
 ```
 
-The script will download approximately 500MB-1GB of files and set up the Kali environment .
+The script will download approximately 500MB-1GB of files and set up the Anroot environment .
 
-Step 5: Launch Kali
+Step 5: Launch Anroot
 
 After installation completes:
 
 ```bash
-# Start Kali Linux
+# Start Anroot Linux
 ./start-kali.sh
 ```
 
-You should see the Kali Linux prompt:
+You should see the Anroot Linux prompt:
 
 ```bash
 root@localhost:~#
@@ -142,9 +142,9 @@ root@localhost:~#
 
 ⚙️ Configuration
 
-Initial Kali Setup
+Initial Anroot Setup
 
-Once inside Kali, update the system:
+Once inside Anroot, update the system:
 
 ```bash
 # Update package lists
@@ -185,10 +185,10 @@ ping -c 4 google.com
 
 Persistent Storage
 
-Your Kali environment is stored in:
+Your Anroot environment is stored in:
 
 ```
-/data/data/com.kali/files/home/kali-arm64/
+/data/data/com.anroot/files/home/kali-arm64/
 ```
 
 All changes persist automatically across sessions .
@@ -200,8 +200,8 @@ All changes persist automatically across sessions .
 Basic Commands
 
 Command Action
-./start-kali.sh Start Kali Linux
-exit Exit Kali session
+./start-kali.sh Start Anroot Linux
+exit Exit Anroot session
 apt install <package> Install new tools
 apt update Update package lists
 apt upgrade Upgrade installed packages
@@ -217,7 +217,7 @@ pkg install tsu
 # Launch Termux with root
 tsu
 
-# Start Kali as root
+# Start Anroot as root
 ./start-kali.sh
 ```
 
@@ -229,7 +229,7 @@ Working with Files
 # Access shared storage
 cd /sdcard
 
-# Copy files to Kali environment
+# Copy files to Anroot environment
 cp /sdcard/target.zip ~/
 
 # Extract files
@@ -250,7 +250,7 @@ chmod +x scriptname.sh
 
 Issue 2: PulseAudio Errors
 
-If you see Autospawn lock errors when starting Kali:
+If you see Autospawn lock errors when starting Anroot:
 
 Solution: Edit start-kali.sh and modify the pulseaudio line 
 
@@ -301,26 +301,26 @@ Optimization tips:
 
 Complete Removal
 
-To completely remove AndroKali from your device:
+To completely remove Anroot from your device:
 
 ```bash
 # Inside Termux, run uninstall script
-wget https://raw.githubusercontent.com/AndronixApp/AndronixOrigin/master/Uninstall/Kali/UNI-kali.sh
+wget https://raw.githubusercontent.com/AndronixApp/AndronixOrigin/master/Uninstall/Anroot/UNI-kali.sh
 chmod +x UNI-kali.sh
 bash UNI-kali.sh
 
 # Remove Termux app
-# Settings → Apps → AndroKali Termux → Uninstall
+# Settings → Apps → Anroot Termux → Uninstall
 
-# Remove AndroKali helper app
-# Settings → Apps → AndroKali → Uninstall
+# Remove Anroot helper app
+# Settings → Apps → Anroot → Uninstall
 ```
 
 Clean Up Storage
 
 ```bash
 # Delete remaining files manually
-rm -rf /data/data/com.kali/files/home/kali-arm64/
+rm -rf /data/data/com.anroot/files/home/kali-arm64/
 rm -rf ~/kali.sh ~/start-kali.sh
 ```
 
@@ -334,11 +334,11 @@ Architecture
 ┌─────────────────────────────────────┐
 │         Android OS                   │
 │  ┌─────────────────────────────┐    │
-│  │     Termux (com.kali)        │    │
+│  │     Termux (com.anroot)        │    │
 │  │  ┌───────────────────────┐  │    │
 │  │  │    PRoot Layer         │  │    │
 │  │  │  ┌─────────────────┐  │  │    │
-│  │  │  │  Kali Linux FS   │  │  │    │
+│  │  │  │  Anroot Linux FS   │  │  │    │
 │  │  │  └─────────────────┘  │  │    │
 │  │  └───────────────────────┘  │    │
 │  └─────────────────────────────┘    │
@@ -349,16 +349,16 @@ Key Components
 
 · Termux: Terminal emulator and Linux environment 
 · PRoot: User-space chroot implementation
-· Kali RootFS: Kali Linux base filesystem
-· Custom Package: Modified com.kali identifier 
+· Anroot RootFS: Anroot Linux base filesystem
+· Custom Package: Modified com.anroot identifier 
 
 File Locations
 
 Path Purpose
-/data/data/com.kali/files/home/ User home directory
-/data/data/com.kali/files/usr/ Termux system files
-~/kali-arm64/ Kali Linux installation
-~/start-kali.sh Kali startup script
+/data/data/com.anroot/files/home/ User home directory
+/data/data/com.anroot/files/usr/ Termux system files
+~/kali-arm64/ Anroot Linux installation
+~/start-kali.sh Anroot startup script
 
 ---
 
@@ -373,7 +373,7 @@ Community Channels
 Common Resources
 
 · Termux Wiki
-· Kali Linux Docs
+· Anroot Linux Docs
 · PRoot Documentation
 
 Reporting Issues
@@ -393,14 +393,14 @@ When reporting issues, please include:
 This project is based on open-source software:
 
 · Termux: GPLv3 with additional terms
-· Kali Linux: Various open-source licenses
-· AndroKali Helper: MIT License
+· Anroot Linux: Various open-source licenses
+· Anroot Helper: MIT License
 
 ---
 
 ⚠️ Disclaimer
 
-AndroKali is intended for educational and security testing purposes only. Users are responsible for complying with all applicable laws and regulations. The developers assume no liability for misuse of this software.
+Anroot is intended for educational and security testing purposes only. Users are responsible for complying with all applicable laws and regulations. The developers assume no liability for misuse of this software.
 
 ---
 

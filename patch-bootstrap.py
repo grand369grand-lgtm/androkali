@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Patch Termux bootstrap zips to replace com.termux with com.kali.
+Patch Anroot bootstrap zips to replace com.termux with com.anroot.
 
 This script processes bootstrap zip files and replaces all references to
-com.termux with com.kali in both text files (scripts, configs) and
+com.termux with com.anroot in both text files (scripts, configs) and
 ELF binaries (RPATH/RUNPATH entries).
 
 Usage: python3 patch-bootstrap.py <zip_file> [zip_file ...]
@@ -18,9 +18,9 @@ import zipfile
 
 # The old and new package names
 OLD_PREFIX = "com.termux"
-NEW_PREFIX = "com.kali"
+NEW_PREFIX = "com.anroot"
 OLD_PATH = "/data/data/com.termux"
-NEW_PATH = "/data/data/com.kali"
+NEW_PATH = "/data/data/com.anroot"
 
 
 def is_elf(data):
@@ -31,7 +31,7 @@ def is_elf(data):
 def patch_elf_rpath(data):
     """
     Patch ELF binary RPATH/RUNPATH entries.
-    Replace /data/data/com.termux with /data/data/com.kali in .dynstr.
+    Replace /data/data/com.termux with /data/data/com.anroot in .dynstr.
     
     Since the new path is shorter, we pad the remaining bytes with nulls.
     This is safe because C strings are null-terminated.
@@ -57,7 +57,7 @@ def patch_elf_rpath(data):
 
 def patch_text(data):
     """
-    Patch text files (scripts, configs) by replacing com.termux with com.kali.
+    Patch text files (scripts, configs) by replacing com.termux with com.anroot.
     For text files, the replacement can be shorter since there's no structural constraint.
     """
     try:

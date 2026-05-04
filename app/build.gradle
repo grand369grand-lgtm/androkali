@@ -41,7 +41,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.kali"
+        applicationId "com.anroot"
         minSdkVersion project.properties.minSdkVersion.toInteger()
         targetSdkVersion project.properties.targetSdkVersion.toInteger()
         versionCode 119
@@ -52,14 +52,14 @@ android {
 
         buildConfigField "String", "TERMUX_PACKAGE_VARIANT", "\"" + project.ext.packageVariant + "\"" // Used by TermuxApplication class
 
-        manifestPlaceholders.TERMUX_PACKAGE_NAME = "com.kali"
-        manifestPlaceholders.TERMUX_APP_NAME = "Kali"
-        manifestPlaceholders.TERMUX_API_APP_NAME = "Kali:API"
-        manifestPlaceholders.TERMUX_BOOT_APP_NAME = "Kali:Boot"
-        manifestPlaceholders.TERMUX_FLOAT_APP_NAME = "Kali:Float"
-        manifestPlaceholders.TERMUX_STYLING_APP_NAME = "Kali:Styling"
-        manifestPlaceholders.TERMUX_TASKER_APP_NAME = "Kali:Tasker"
-        manifestPlaceholders.TERMUX_WIDGET_APP_NAME = "Kali:Widget"
+        manifestPlaceholders.TERMUX_PACKAGE_NAME = "com.anroot"
+        manifestPlaceholders.TERMUX_APP_NAME = "Anroot"
+        manifestPlaceholders.TERMUX_API_APP_NAME = "Anroot:API"
+        manifestPlaceholders.TERMUX_BOOT_APP_NAME = "Anroot:Boot"
+        manifestPlaceholders.TERMUX_FLOAT_APP_NAME = "Anroot:Float"
+        manifestPlaceholders.TERMUX_STYLING_APP_NAME = "Anroot:Styling"
+        manifestPlaceholders.TERMUX_TASKER_APP_NAME = "Anroot:Tasker"
+        manifestPlaceholders.TERMUX_WIDGET_APP_NAME = "Anroot:Widget"
 
         externalNativeBuild {
             ndkBuild {
@@ -86,10 +86,10 @@ android {
             keyPassword 'xrj45yWGLbsO7W0v'
         }
         release {
-            storeFile file('kali-release.jks')
-            keyAlias 'kali'
-            storePassword 'kali12345'
-            keyPassword 'kali12345'
+            storeFile file('anroot-release.jks')
+            keyAlias 'anroot'
+            storePassword 'anroot12345'
+            keyPassword 'anroot12345'
         }
     }
 
@@ -140,10 +140,10 @@ android {
         variant.outputs.all { output ->
             if (variant.buildType.name == "debug") {
                 def abi = output.getFilter(com.android.build.OutputFile.ABI)
-                outputFileName = new File("kali-app_" + (apkVersionTag ? apkVersionTag : project.ext.packageVariant + "-" + "debug") + "_" + (abi ? abi : "universal") + ".apk")
+                outputFileName = new File("anroot-app_" + (apkVersionTag ? apkVersionTag : project.ext.packageVariant + "-" + "debug") + "_" + (abi ? abi : "universal") + ".apk")
             } else if (variant.buildType.name == "release") {
                 def abi = output.getFilter(com.android.build.OutputFile.ABI)
-                outputFileName = new File("kali-app_" + (apkVersionTag ? apkVersionTag : project.ext.packageVariant + "-" + "release") + "_" + (abi ? abi : "universal") + ".apk")
+                outputFileName = new File("anroot-app_" + (apkVersionTag ? apkVersionTag : project.ext.packageVariant + "-" + "release") + "_" + (abi ? abi : "universal") + ".apk")
             }
         }
     }
@@ -178,14 +178,14 @@ def downloadBootstrap(String arch, String expectedChecksum, String version) {
     def localUrl = "src/main/cpp/bootstrap-" + arch + ".zip"
     def file = new File(projectDir, localUrl)
     if (file.exists()) {
-        // Check if the file has already been patched (contains com.kali instead of com.termux)
+        // Check if the file has already been patched (contains com.anroot instead of com.termux)
         // If so, skip download and checksum verification
         def randomAccessFile = new RandomAccessFile(file, "r")
         def sampleSize = Math.min(file.length(), 65536).intValue()
         def sampleBytes = new byte[sampleSize]
         randomAccessFile.readFully(sampleBytes)
         randomAccessFile.close()
-        if (new String(sampleBytes, "UTF-8").contains("com.kali")) {
+        if (new String(sampleBytes, "UTF-8").contains("com.anroot")) {
             logger.quiet("Bootstrap " + arch + " already patched, skipping download")
             return
         }
@@ -260,9 +260,9 @@ task downloadBootstraps() {
 task patchBootstraps() {
     dependsOn downloadBootstraps
     doLast {
-        // Patch bootstrap zips to replace com.termux with com.kali in all files.
+        // Patch bootstrap zips to replace com.termux with com.anroot in all files.
         // This is needed because the bootstrap binaries have /data/data/com.termux hardcoded paths,
-        // but our app uses applicationId "com.kali" so the data directory is /data/data/com.kali/.
+        // but our app uses applicationId "com.anroot" so the data directory is /data/data/com.anroot/.
         def patchScript = new File(project.rootDir, "patch-bootstrap.py")
         if (!patchScript.exists()) {
             logger.quiet("Patch script not found, skipping bootstrap patching")

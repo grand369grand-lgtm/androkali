@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!DOCTYPE resources [
-    <!ENTITY TERMUX_PACKAGE_NAME "com.kali">
-    <!ENTITY TERMUX_APP_NAME "Kali">
-    <!ENTITY TERMUX_API_APP_NAME "Kali:API">
-    <!ENTITY TERMUX_BOOT_APP_NAME "Kali:Boot">
-    <!ENTITY TERMUX_FLOAT_APP_NAME "Kali:Float">
-    <!ENTITY TERMUX_STYLING_APP_NAME "Kali:Styling">
-    <!ENTITY TERMUX_TASKER_APP_NAME "Kali:Tasker">
-    <!ENTITY TERMUX_WIDGET_APP_NAME "Kali:Widget">
-    <!ENTITY TERMUX_PREFIX_DIR_PATH "/data/data/com.kali/files/usr">
+    <!ENTITY TERMUX_PACKAGE_NAME "com.anroot">
+    <!ENTITY TERMUX_APP_NAME "Anroot">
+    <!ENTITY TERMUX_API_APP_NAME "Anroot:API">
+    <!ENTITY TERMUX_BOOT_APP_NAME "Anroot:Boot">
+    <!ENTITY TERMUX_FLOAT_APP_NAME "Anroot:Float">
+    <!ENTITY TERMUX_STYLING_APP_NAME "Anroot:Styling">
+    <!ENTITY TERMUX_TASKER_APP_NAME "Anroot:Tasker">
+    <!ENTITY TERMUX_WIDGET_APP_NAME "Anroot:Widget">
+    <!ENTITY TERMUX_PREFIX_DIR_PATH "/data/data/com.anroot/files/usr">
     ]>
 
 <resources>
