@@ -27,7 +27,9 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -107,6 +109,8 @@ final class TermuxInstaller {
             if (TermuxFileUtils.isTermuxPrefixDirectoryEmpty()) {
                 Logger.logInfo(LOG_TAG, "The termux prefix directory \"" + TERMUX_PREFIX_DIR_PATH + "\" exists but is empty or only contains specific unimportant files.");
             } else {
+                // Ensure libpath_remap.so exists even on upgrade installs
+                ensurePathRemapLibraryInstalled(activity);
                 whenDone.run();
                 return;
             }
@@ -369,6 +373,51 @@ final class TermuxInstaller {
                 }
             }
         }.start();
+    }
+
+    /**
+     * Ensure that libpath_remap.so is installed to $PREFIX/lib/.
+     * On fresh installs, it comes from the bootstrap zip. On upgrades,
+     * we need to copy it from the APK's native library directory since
+     * the bootstrap zip is not re-extracted.
+     */
+    static void ensurePathRemapLibraryInstalled(Context context) {
+        File targetFile = new File(TERMUX_PREFIX_DIR_PATH, "lib/libpath_remap.so");
+        if (targetFile.exists()) {
+            return; // Already installed
+        }
+
+        Logger.logInfo(LOG_TAG, "libpath_remap.so not found at " + targetFile.getAbsolutePath() + ", attempting to copy from APK native lib directory.");
+
+        try {
+            // The APK's native libraries are extracted to the application's native library directory
+            // by Android's package manager. We look for libpath_remap.so there.
+            String nativeLibDir = context.getApplicationInfo().nativeLibraryDir;
+            File sourceFile = new File(nativeLibDir, "libpath_remap.so");
+
+            if (sourceFile.exists()) {
+                // Ensure the target directory exists
+                File libDir = new File(TERMUX_PREFIX_DIR_PATH, "lib");
+                if (!libDir.exists()) {
+                    libDir.mkdirs();
+                }
+
+                // Copy the file
+                try (InputStream in = new java.io.FileInputStream(sourceFile);
+                     FileOutputStream out = new FileOutputStream(targetFile)) {
+                    byte[] buf = new byte[8096];
+                    int len;
+                    while ((len = in.read(buf)) > 0) {
+                        out.write(buf, 0, len);
+                    }
+                }
+                Logger.logInfo(LOG_TAG, "Successfully copied libpath_remap.so from " + sourceFile.getAbsolutePath() + " to " + targetFile.getAbsolutePath());
+            } else {
+                Logger.logInfo(LOG_TAG, "libpath_remap.so not found in APK native lib dir: " + sourceFile.getAbsolutePath() + ". Path translation will not be available.");
+            }
+        } catch (Exception e) {
+            Logger.logError(LOG_TAG, "Failed to install libpath_remap.so: " + e.getMessage());
+        }
     }
 
     private static Error ensureDirectoryExists(File directory) {

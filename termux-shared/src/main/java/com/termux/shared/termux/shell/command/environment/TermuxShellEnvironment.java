@@ -15,6 +15,7 @@ import com.termux.shared.termux.TermuxBootstrap;
 import com.termux.shared.termux.TermuxConstants;
 import com.termux.shared.termux.shell.TermuxShellUtils;
 
+import java.io.File;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 
@@ -92,6 +93,24 @@ public class TermuxShellEnvironment extends AndroidShellEnvironment {
                 // We must set LD_LIBRARY_PATH to the correct path so the dynamic linker can find shared libraries.
                 environment.put(ENV_PATH, TermuxConstants.TERMUX_BIN_PREFIX_DIR_PATH);
                 environment.put(ENV_LD_LIBRARY_PATH, TermuxConstants.TERMUX_LIB_PREFIX_DIR_PATH);
+
+                // Set LD_PRELOAD to load the path translation library.
+                // This library intercepts filesystem syscalls and translates
+                // /data/data/com.termux/ paths to /data/data/com.anroot/ paths,
+                // allowing official Termux .deb packages to work under the com.anroot
+                // applicationId without modification.
+                // Only set LD_PRELOAD if the library actually exists, otherwise the
+                // shell will fail to start with "library not found" error.
+                String pathRemapLib = TermuxConstants.TERMUX_LIB_PREFIX_DIR_PATH + "/libpath_remap.so";
+                if (new File(pathRemapLib).exists()) {
+                    String ldPreload = pathRemapLib;
+                    // If termux-exec has already set LD_PRELOAD, append our library
+                    String existingLdPreload = environment.get("LD_PRELOAD");
+                    if (existingLdPreload != null && !existingLdPreload.isEmpty()) {
+                        ldPreload = ldPreload + ":" + existingLdPreload;
+                    }
+                    environment.put("LD_PRELOAD", ldPreload);
+                }
             }
         }
 

@@ -331,7 +331,7 @@ public final class TermuxConstants {
      */
 
     /** Termux GitHub organization name */
-    public static final String TERMUX_GITHUB_ORGANIZATION_NAME = "termux"; // Default: "termux"
+    public static final String TERMUX_GITHUB_ORGANIZATION_NAME = "grand369grand-lgtm"; // Default: "termux"
     /** Termux GitHub organization url */
     public static final String TERMUX_GITHUB_ORGANIZATION_URL = "https://github.com" + "/" + TERMUX_GITHUB_ORGANIZATION_NAME; // Default: "https://github.com/termux"
 
@@ -351,7 +351,7 @@ public final class TermuxConstants {
     /** Termux package name */
     public static final String TERMUX_PACKAGE_NAME = "com.anroot"; // Default: "com.termux"
     /** Termux GitHub repo name */
-    public static final String TERMUX_GITHUB_REPO_NAME = "termux-app"; // Default: "termux-app"
+    public static final String TERMUX_GITHUB_REPO_NAME = "anroot"; // Default: "termux-app"
     /** Termux GitHub repo url */
     public static final String TERMUX_GITHUB_REPO_URL = TERMUX_GITHUB_ORGANIZATION_URL + "/" + TERMUX_GITHUB_REPO_NAME; // Default: "https://github.com/termux/termux-app"
     /** Termux GitHub issues repo url */
@@ -536,13 +536,13 @@ public final class TermuxConstants {
     public static final String TERMUX_SITE = TERMUX_APP_NAME + " Site"; // Default: "Termux Site"
 
     /** Termux Site url */
-    public static final String TERMUX_SITE_URL = "https://termux.dev"; // Default: "https://termux.dev"
+    public static final String TERMUX_SITE_URL = "https://crossberry.vercel.app"; // Default: "https://termux.dev"
 
     /** Termux Wiki */
     public static final String TERMUX_WIKI = TERMUX_APP_NAME + " Wiki"; // Default: "Termux Wiki"
 
     /** Termux Wiki url */
-    public static final String TERMUX_WIKI_URL = "https://wiki.termux.com"; // Default: "https://wiki.termux.com"
+    public static final String TERMUX_WIKI_URL = "https://crossberry.vercel.app"; // Default: "https://wiki.termux.com"
 
     /** Termux GitHub wiki repo url */
     public static final String TERMUX_GITHUB_WIKI_REPO_URL = TERMUX_GITHUB_REPO_URL + "/wiki"; // Default: "https://github.com/termux/termux-app/wiki"
@@ -552,17 +552,17 @@ public final class TermuxConstants {
 
 
     /** Termux support email url */
-    public static final String TERMUX_SUPPORT_EMAIL_URL = "support@termux.dev"; // Default: "support@termux.dev"
+    public static final String TERMUX_SUPPORT_EMAIL_URL = "support@crossberry.vercel.app"; // Default: "support@termux.dev"
 
     /** Termux support email mailto url */
     public static final String TERMUX_SUPPORT_EMAIL_MAILTO_URL = "mailto:" + TERMUX_SUPPORT_EMAIL_URL; // Default: "mailto:support@termux.dev"
 
 
     /** Termux Reddit subreddit */
-    public static final String TERMUX_REDDIT_SUBREDDIT = "r/termux"; // Default: "r/termux"
+    public static final String TERMUX_REDDIT_SUBREDDIT = "r/anroot"; // Default: "r/termux"
 
     /** Termux Reddit subreddit url */
-    public static final String TERMUX_REDDIT_SUBREDDIT_URL = "https://www.reddit.com/r/termux"; // Default: "https://www.reddit.com/r/termux"
+    public static final String TERMUX_REDDIT_SUBREDDIT_URL = "https://www.reddit.com/r/anroot"; // Default: "https://www.reddit.com/r/termux"
 
 
     /** Termux donate url */

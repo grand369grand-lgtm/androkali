@@ -89,7 +89,7 @@
 
     <string name="action_report_issue">Report Issue</string>
     <string name="msg_generating_report">Generating Report</string>
-    <string name="msg_add_termux_debug_info">Add termux debug info to report?</string>
+    <string name="msg_add_termux_debug_info">Add anroot debug info to report?</string>
 
     <string name="error_styling_not_installed">The &TERMUX_STYLING_APP_NAME; Plugin App is not installed.</string>
     <string name="action_styling_install">Install</string>
@@ -130,8 +130,8 @@
 
 
     <!-- Miscellaneous -->
-    <string name="error_termux_service_start_failed_general">Failed to start TermuxService. Check logcat for exception message.</string>
-    <string name="error_termux_service_start_failed_bg">Failed to start TermuxService while app is in background due to android bg restrictions.</string>
+    <string name="error_termux_service_start_failed_general">Failed to start AnrootService. Check logcat for exception message.</string>
+    <string name="error_termux_service_start_failed_bg">Failed to start AnrootService while app is in background due to android bg restrictions.</string>
 
 
 
